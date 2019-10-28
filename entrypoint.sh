@@ -11,4 +11,12 @@ export KAFKA_MANAGER_AUTH_EXCLUDED_PATHS="${KAFKA_MANAGER_AUTH_EXCLUDED_PATHS:-/
 KAFKA_MANAGER_CONFIG="${KAFKA_MANAGER_CONFIG:-./conf/application.conf}"
 HTTP_PORT="${HTTP_PORT:-9000}"
 
-exec /app/bin/kafka-manager  -Dconfig.file=${KAFKA_MANAGER_CONFIG} -Dhttp.port=${HTTP_PORT} "${KAFKA_MANAGER_ARGS}" "${@}"
+exec /app/bin/kafka-manager \
+  -Dpidfile.path=/dev/null \
+  -Dapplication.home=${MESOS_SANDBOX} \
+  -Dconfig.file=${KAFKA_MANAGER_CONFIG} \
+  -Dhttp.port=${HTTP_PORT} \
+  -Djava.security.auth.login.config=${JAAS_CONFIG} \
+  -Djava.security.krb5.conf=${KRB5_CONFIG} \
+  "${KAFKA_MANAGER_ARGS}" \
+  "${@}"
