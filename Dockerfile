@@ -23,8 +23,8 @@ RUN mkdir -p /app \
  && rm -rf /app/share/doc
 
 # Add dcos-ca cert to cacerts
-RUN mkdir ${MESOS_SANDBOX}/security \
- && cd ${MESOS_SANDBOX}/security \
+RUN mkdir -p /etc/security \
+ && cd /etc/security \
  && wget ${DCOS_URL}/ca/dcos-ca.crt \
  && keytool -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -noprompt -storepass changeit -alias CARoot -importcert -file dcos-ca.crt
 
